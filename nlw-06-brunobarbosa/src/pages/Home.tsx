@@ -25,6 +25,9 @@ export default function Home() {
                 type="text"
                 placeholder="Digite o código da sala"
               />
+              <button type="submit">
+                Entrar na sala 
+              </button>
             </form>
           </div>
         </div>

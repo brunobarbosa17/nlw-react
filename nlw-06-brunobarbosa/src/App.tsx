@@ -1,15 +1,8 @@
-import React from 'react';
-import Button from './components/Button';
+import Home from './pages/Home';
 
 function App() {
   return (
-    <div className="App">
-      <h1>Salve!</h1>
-      <Button text="botao 1"/>
-      <Button />
-      <Button />
-      <Button />
-    </div>
+    <Home />
   );
 }
 

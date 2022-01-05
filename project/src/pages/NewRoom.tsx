@@ -6,6 +6,8 @@ import '../styles/auth.scss'
 
 import Button from '../components/Button'
 
+import { Link } from 'react-router-dom'
+
 export default function NewRoom() {
   return (
     <div id="page-auth">
@@ -28,7 +30,7 @@ export default function NewRoom() {
               </Button>
             </form>
             <p>
-              Quer entrar em uma sala existente? <a href="#">clique aqui</a>
+              Quer entrar em uma sala existente? <Link  to="/">clique aqui</Link>
             </p>
         </div>
       </main>

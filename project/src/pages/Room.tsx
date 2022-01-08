@@ -5,8 +5,9 @@ import RoomCode from '../components/RoomCode'
 import '../styles/room.scss'
 
 import { useParams } from 'react-router-dom'
-import {useState} from 'react';
+import { FormEvent, useState, useEffect } from 'react';
 import { useAuth } from '../hooks/useAuth'
+import { database } from '../services/firebase'
 
 type RoomParams = {
   id: string;
@@ -17,7 +18,17 @@ export function Room() {
   const params = useParams<RoomParams>();
   const [newQuestion, setNewQuestion] = useState('');
 
-  async function handleSendQuestion() {
+  useEffect( () => {
+    const roomRef = database.ref(`rooms/${params.id}`);
+
+    roomRef.once('value', room => {
+      console.log(room.val());
+    })
+  }, [])
+
+  async function handleSendQuestion(e: FormEvent) {
+    e.preventDefault();
+
     if (newQuestion.trim() === '') {
       return;
     }
@@ -35,6 +46,9 @@ export function Room() {
       isHighligted: false,
       isAnswered: false
     }
+
+    await database.ref(`rooms/${params.id}/questions`).push(question);
+    setNewQuestion('');
   }
 
   return(
@@ -52,15 +66,24 @@ export function Room() {
           <span>4 perguntas</span>
         </div>
 
-        <form>
+        <form onSubmit={handleSendQuestion}>
           <textarea 
             placeholder='O que você quer perguntar?'
             value={newQuestion}
             onChange={e=>setNewQuestion(e.target.value)}
             />
             <div className="form-footer">
-              <span>Para enviar uma pergunta, <button>faça seu login.</button></span>
-              <Button type="submit">Enviar pergunta</Button>
+              { user ? (
+                <div className="user-info">
+                  <img src={user.avatar} alt={user.name} />
+                  <span>{user.name}</span>
+                </div>
+              ) : 
+              (
+                <span>Para enviar uma pergunta, <button>faça seu login.</button></span>
+              )}
+              
+              <Button type="submit" disabled={!user}>Enviar pergunta</Button>
             </div>
         </form>
       </main>

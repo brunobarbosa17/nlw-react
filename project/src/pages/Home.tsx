@@ -38,6 +38,10 @@ export default function Home() {
       return alert('Sala inexistente!');
     }
 
+    if(roomRef.val().endAt) {
+      return alert('Esta sala já foi fechada!')
+    }
+
     history.push(`/rooms/${roomCode}`)
   }
 

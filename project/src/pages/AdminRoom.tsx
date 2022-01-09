@@ -12,6 +12,8 @@ import Question from '../components/Question'
 import { useRoom } from '../hooks/useRoom'
 
 import deleteImg from '../assets/delete.svg'
+import checkImg from '../assets/check.svg'
+import answerImg from '../assets/answer.svg'
 
 type RoomParams = {
   id: string;
@@ -42,6 +44,18 @@ export function AdminRoom() {
     history.push('/')
   }
 
+  async function handleCheckQuestion(questionId: string) {
+    await database.ref(`rooms/${roomId}/questions/${questionId}`).update({
+      isAnswered: true,
+    })
+  }
+
+  async function handleHighlightQuestion(questionId: string) {
+    await database.ref(`rooms/${roomId}/questions/${questionId}`).update({
+      isHighlighted: true,
+    })
+  }
+
   return (
     <div id="page-room">
       <header>
@@ -67,6 +81,16 @@ export function AdminRoom() {
                 key={question.id}
                 content={question.content}
                 author={question.author}>
+                <button 
+                type='button'
+                onClick={() => handleCheckQuestion(question.id)}>
+                  <img src={checkImg} alt="Marcar pergunta como respondida" />
+                </button>
+                <button 
+                type='button'
+                onClick={() => handleHighlightQuestion(question.id)}>
+                  <img src={answerImg} alt="Destacar pergunta" />
+                </button>
                 <button 
                 type='button'
                 onClick={() => handleDeleteQuestion(question.id)}>

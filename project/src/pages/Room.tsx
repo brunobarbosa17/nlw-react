@@ -44,7 +44,7 @@ export function Room() {
         name: user.name,
         avatar: user.avatar
       },
-      isHighligted: false,
+      isHighlighted: false,
       isAnswered: false
     }
 

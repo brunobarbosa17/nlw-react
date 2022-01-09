@@ -11,7 +11,7 @@ import { database } from '../services/firebase'
 import Question from '../components/Question'
 import { useRoom } from '../hooks/useRoom'
 
-
+import deleteImg from '../assets/delete.svg'
 
 type RoomParams = {
   id: string;
@@ -51,7 +51,11 @@ export function AdminRoom() {
               <Question
                 key={question.id}
                 content={question.content}
-                author={question.author} />
+                author={question.author}>
+                <button>
+                  <img src={deleteImg} alt="Deletar pergunta" />
+                </button>
+                  </Question>
             )
           })}
         </div>

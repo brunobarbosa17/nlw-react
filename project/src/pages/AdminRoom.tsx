@@ -29,7 +29,7 @@ export function AdminRoom() {
   const [newQuestion, setNewQuestion] = useState('');
   
   const {title, questions} = useRoom(roomId);
-
+  console.log(questions)
   async function handleDeleteQuestion(questionId: string) {
     if (window.confirm('Deseja excluir esta pergunta?')) {
       const questionRef = await database.ref(`rooms/${roomId}/questions/${questionId}`).remove()
@@ -80,17 +80,23 @@ export function AdminRoom() {
               <Question
                 key={question.id}
                 content={question.content}
-                author={question.author}>
-                <button 
-                type='button'
-                onClick={() => handleCheckQuestion(question.id)}>
-                  <img src={checkImg} alt="Marcar pergunta como respondida" />
-                </button>
-                <button 
-                type='button'
-                onClick={() => handleHighlightQuestion(question.id)}>
-                  <img src={answerImg} alt="Destacar pergunta" />
-                </button>
+                author={question.author}
+                isAnswered={question.isAnswered}
+                isHighlighted={question.isHighlighted}>
+                {!question.isAnswered && (
+                  <>
+                    <button 
+                    type='button'
+                    onClick={() => handleCheckQuestion(question.id)}>
+                      <img src={checkImg} alt="Marcar pergunta como respondida" />
+                    </button>
+                    <button 
+                    type='button'
+                    onClick={() => handleHighlightQuestion(question.id)}>
+                      <img src={answerImg} alt="Destacar pergunta" />
+                    </button>
+                  </>
+                )}
                 <button 
                 type='button'
                 onClick={() => handleDeleteQuestion(question.id)}>

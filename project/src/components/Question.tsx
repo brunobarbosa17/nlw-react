@@ -19,8 +19,8 @@ export default function Question({content, author, children, isAnswered = false,
     <div 
     className={classnames(
       'question', 
-      {answered: isAnswered},
-      {highlighted: isHighlighted},
+      { answered: isAnswered},
+      { highlighted: isHighlighted && !isAnswered },
       )}>
       <p>{content}</p>
       <footer>
